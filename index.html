@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ο Πύργος του Καραμίχου: Παρουσίαση Ιστορίας</title>
+    <!-- Φόρτωση Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Προσαρμοσμένο στυλ για να φαίνεται η παρουσίαση μοντέρνα */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        .slide {
+            transition: opacity 0.5s ease-in-out;
+            min-height: calc(100vh - 100px); /* Αφήνει χώρο για την πλοήγηση */
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .slide.active {
+            opacity: 1;
+            position: relative;
+        }
+        .slide-container {
+            min-height: 70vh;
+            position: relative;
+        }
+        .progress-bar {
+            height: 6px;
+            background-color: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        /* Old paper background effect */
+        .old-paper {
+            background-color: #f5e9d4;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4c4a8' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+            position: relative;
+        }
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+        }
+        .presentation-image {
+            max-width: 80%;
+            margin: 20px auto;
+            display: block;
+            border: 3px solid #8B4513;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+
+    <!-- Κεντρικός Πίνακας Παρουσίασης -->
+    <div id="presentation-container" class="w-full max-w-4xl bg-white shadow-2xl rounded-xl overflow-hidden">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill" style="width: 8.33%"></div>
+        </div>
+        
+        <!-- Περιοχή Διαφανειών -->
+        <div id="slides-wrapper" class="p-6 md:p-10 slide-container">
+            
+            <!-- Slide 1: Εισαγωγή -->
+            <div id="slide-1" class="slide active old-paper" data-slide="1">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-blue-800 mb-6 border-b-4 border-yellow-500 pb-2">1. Ο Πύργος του Καραμίχου: Ένα Ταξίδι στην Ιστορία των Φαρσάλων</h1>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed">Ο Πύργος του Καραμίχου δεν είναι απλώς ένα παλιό κτίριο. Είναι ο μοναδικός σωζόμενος μάρτυρας μιας ολόκληρης εποχής στην πόλη των Φαρσάλων. Σας προσκαλούμε να ανακαλύψετε την ιστορία του, από τα Οθωμανικά χρόνια μέχρι τη σύγχρονη αναγέννησή του.</p>
+                <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/%CE%9A%CE%B1%CF%81%CE%B1%CE%BC%CE%AF%CF%87%CE%BF%CF%821.jpg" alt="Ο Πύργος του Καραμίχου" class="presentation-image mt-8">
+            </div>
+
+            <!-- Slide 2: Τι είναι ο Πύργος; -->
+            <div id="slide-2" class="slide old-paper" data-slide="2">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">2. Τι Είναι ο Πύργος του Καραμίχου; Το «Πυργόσπιτο»</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Πρόκειται για ένα σπάνιο παράδειγμα <strong>πυργόσπιτου</strong> της Όψιμης Οθωμανικής Περιόδου. Αυτά τα κτίρια συνδύαζαν αμυντικά χαρακτηριστικά (πύργος) με οικιστική χρήση (σπίτι), εξυπηρετώντας συνήθως πλούσιες ή σημαντικές οικογένειες της περιοχής. Είναι το μοναδικό σωζόμενο κτίσμα αυτού του είδους στην ευρύτερη περιοχή των Φαρσάλων.</p>
+                <ul class="list-disc ml-8 mt-4 text-gray-600">
+                    <li><strong>Χρονολόγηση:</strong> Εκτιμάται ότι κατασκευάστηκε τον <strong>18ο αιώνα</strong>.</li>
+                    <li><strong>Τύπος:</strong> Τριώροφο κτίριο με επιβλητική παρουσία.</li>
+                </ul>
+            </div>
+
+            <!-- Slide 3: Η Εποχή της Κατασκευής -->
+            <div id="slide-3" class="slide old-paper" data-slide="3">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">3. Η Εποχή της Κατασκευής: Ο 18ος Αιώνας</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Ο Πύργος χτίστηκε στα χρόνια της <strong>Τουρκοκρατίας</strong>, μια εποχή όπου η Θεσσαλία, και ειδικά τα Φάρσαλα, ήταν μια σημαντική γεωργική περιοχή. Τα πυργόσπιτα εξυπηρετούσαν την ανάγκη για προστασία, αλλά και την επίδειξη του κύρους των ιδιοκτητών τους (Οθωμανών αξιωματούχων ή πλούσιων γαιοκτημόνων).</p>
+                <div class="mt-8 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                    <p class="italic text-gray-600">Ακόμη και μετά την απελευθέρωση της Θεσσαλίας το 1881, ο Πύργος παρέμεινε ένα σύμβολο ισχύος και πλούτου.</p>
+                </div>
+                <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/%CE%9A%CE%B1%CF%81%CE%B1%CE%BC%CE%AF%CF%87%CE%BF%CF%823.jpg" alt="Ο Πύργος του Καραμίχου" class="presentation-image mt-8">
+            </div>
+
+            <!-- Slide 4: Η Μετα-Οθωμανική Μετάβαση -->
+            <div id="slide-4" class="slide old-paper" data-slide="4">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">4. Η Μετα-Οθωμανική Μετάβαση: Οι Πρώτοι Έλληνες Ιδιοκτήτες</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Μετά την ενσωμάτωση της Θεσσαλίας στο ελληνικό κράτος (1881), ο Πύργος περιήλθε σε ελληνικά χέρια. Η πρώτη γνωστή οικογένεια που τον απέκτησε ήταν η οικογένεια <strong>Πανταζή</strong>, γηγενείς Φαρσαλινοί που ασχολούνταν με το ζωεμπόριο.</p>
+                <ul class="list-disc ml-8 mt-4 text-gray-600">
+                    <li>Η ιδιοκτησία της οικογένειας Πανταζή χρονολογείται τουλάχιστον από το 1881.</li>
+                    <li>Η αναζήτηση για τους ιδιοκτήτες πριν από το 1881 παραμένει ατελής.</li>
+                </ul>
+            </div>
+
+            <!-- Slide 5: Η Εποχή του Σωτήρη Καραμίχου -->
+            <div id="slide-5" class="slide old-paper" data-slide="5">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">5. Η Εποχή του Σωτήρη Καραμίχου: 1931</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Το 1931, ο Πύργος αγοράστηκε από τον <strong>Σωτήρη Καραμίχο</strong>, έναν έμπορο με καταγωγή από τον Ασπροπόταμο. Ήταν η οικογένεια Καραμίχου που έδωσε τελικά το όνομά της στο μνημείο. Ο Σωτήρης Καραμίχος έζησε στον Πύργο με την οικογένειά του, σηματοδοτώντας μια περίοδο ακμής.</p>
+                <div class="mt-8 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                    <p class="text-lg text-gray-800">Η εποχή των μεγάλων εμπόρων της Θεσσαλίας</p>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Η Εσωτερική Πολυτέλεια -->
+            <div id="slide-6" class="slide old-paper" data-slide="6">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">6. Μια Εσωτερική Ματιά: Ο «Γραμμένος Οντάς»</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Ο Πύργος ήταν εντυπωσιακός και στο εσωτερικό του. Ο δεύτερος όροφος (γνωστός ως οντάς) ήταν κατάγραφος με τοιχογραφίες, αποδεικνύοντας τον πλούτο και την καλλιτεχνική αίσθηση των ιδιοκτητών του:</p>
+                <ul class="list-disc ml-8 mt-4 text-gray-600">
+                    <li>Μεγάλη τοιχογραφία του <strong>βασιλικού ζεύγους, Όθωνα και Αμαλίας</strong>, στον ανατολικό τοίχο.</li>
+                    <li>Πίνακας με τον <strong>Αχιλλέα</strong> στον βόρειο τοίχο, καθώς τα Φάρσαλα θεωρούνται πατρίδα του μυθικού ήρωα.</li>
+                    <li>Διακόσμηση με φυτικές ταινίες στις γωνίες.</li>
+                </ul>
+            </div>
+
+            <!-- Slide 7: Η Καταστροφή του 1943 -->
+            <div id="slide-7" class="slide old-paper" data-slide="7">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">7. Η Τραγωδία και η Αρχή της Εγκατάλειψης</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Η ιστορία του Πύργου γνώρισε μια απότομη και τραγική καμπή κατά την περίοδο της Κατοχής. Ο Σωτήρης Καραμίχος πέθανε από τύφο (ή λιμό) το 1942, μόλις 36 ετών. </p>
+                <p class="text-lg text-gray-800 leading-relaxed mt-3">Το 1943, η οικογένεια Καραμίχου εγκατέλειψε οριστικά τον Πύργο. Μετά από καταστροφή που υπέστη το 1943, οι περίφημοι ζωγραφισμένοι εσωτερικοί τοίχοι <strong>ασβεστώθηκαν</strong>, χάνοντας έτσι την αρχική τους διακόσμηση.</p>
+            </div>
+
+            <!-- Slide 8: Μετά τον Πόλεμο και ο Σεισμός -->
+            <div id="slide-8" class="slide old-paper" data-slide="8">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">8. Μετά τον Πόλεμο: Ο Σεισμός του 1954</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Μετά την αποχώρηση των Καραμίχου, ο Πύργος παρέμεινε κλειστός μέχρι το 1945, οπότε τον ενοικίασε η οικογένεια Σίμου. Ωστόσο, η παραμονή τους ήταν βραχύβια.</p>
+                <div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                    <p class="font-semibold text-red-700">Ο καταστροφικός σεισμός του 1954, που έπληξε την περιοχή, ήταν το τελικό χτύπημα. Έκτοτε, ο Πύργος έμεινε κλειστός και αργότερα παντελώς <strong>εγκαταλελειμμένος</strong> για δεκαετίες.</p>
+                </div>
+            </div>
+
+            <!-- Slide 9: Η Αναγέννηση του Μνημείου -->
+            <div id="slide-9" class="slide old-paper" data-slide="9">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">9. Η Αναγέννηση: Δωρεά και Αναστύλωση</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Ευτυχώς, η ιστορία του δεν τελείωσε με την εγκατάλειψη. Ο Πύργος δωρήθηκε στον <strong>Δήμο Φαρσάλων</strong>, ο οποίος προχώρησε σε εκτεταμένες εργασίες συντήρησης και αναστύλωσης, με στόχο να τον μετατρέψει σε κέντρο πολιτισμού.</p>
+                <div class="mt-8 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                    <p class="text-lg text-gray-800">Η αναστήλωση του Πύργου αποτέλεσε σημαντικό έργο πολιτιστικής ανάπλασης.</p>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Ο Σύγχρονος Ρόλος -->
+            <div id="slide-10" class="slide old-paper" data-slide="10">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">10. Ο Πύργος Σήμερα: Ένας Φάρος Πολιτισμού</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Ο αναστηλωμένος Πύργος του Καραμίχου αποτελεί πλέον ένα επισκέψιμο, επιβλητικό ιστορικό μνημείο. Φιλοξενεί το:</p>
+                <div class="mt-4 p-4 bg-blue-100 rounded-lg border-l-4 border-blue-500 font-semibold text-xl text-blue-800">
+                    Κέντρο Ψηφιακής Φωτογραφίας Νεότερης Τοπικής Ιστορίας.
+                </div>
+                <p class="text-base text-gray-600 mt-3">Εγκαινιάστηκε τον Ιούνιο του 2023, συνδυάζοντας την παράδοση με τις νέες διαδραστικές τεχνολογίες.</p>
+                <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/%CE%9A%CE%B1%CF%81%CE%B1%CE%BC%CE%AF%CF%87%CE%BF%CF%824.jpg" alt="Ο Πύργος του Καραμίχου" class="presentation-image mt-8">
+            </div>
+
+            <!-- Slide 11: Τι Μπορεί να Δει ο Επισκέπτης; -->
+            <div id="slide-11" class="slide old-paper" data-slide="11">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">11. Η Διαδραστική Εμπειρία</h2>
+                <p class="text-lg text-gray-800 leading-relaxed">Σήμερα, ο Πύργος προσφέρει μια μοναδική εμπειρία στον επισκέπτη, επιτρέποντάς του να ταξιδέψει στη νεότερη ιστορία των Φαρσάλων:</p>
+                <ul class="list-disc ml-8 mt-4 text-gray-800 space-y-2">
+                    <li class="font-medium"><strong>Διαδραστικές Εφαρμογές:</strong> Χρήση ψηφιακής τεχνολογίας για την προβολή της τοπικής ιστορίας.</li>
+                    <li class="font-medium"><strong>Ιστορικά Τεκμήρια:</strong> Φιλοξενεί ανεκτίμητης αξίας οθωμανικά φιρμάνια.</li>
+                    <li class="font-medium"><strong>Συλλογές:</strong> Σπάνιες φωτογραφίες και παραδοσιακές φορεσιές των Φαρσάλων.</li>
+                </ul>
+                <div class="mt-8 p-4 bg-green-50 rounded-lg text-center">
+                    <p class="text-lg font-bold text-green-700">Ο Πύργος Καραμίχου είναι πλέον ανοιχτός στο κοινό, λειτουργώντας ως ζωντανή κιβωτός μνήμης.</p>
+                </div>
+                <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/%CE%9A%CE%B1%CF%81%CE%B1%CE%BC%CE%AF%CF%87%CE%BF%CF%826.jpg" alt="Ο Πύργος του Καραμίχου" class="presentation-image mt-8">
+            </div>
+
+            <!-- Slide 12: Τέλος παρουσίασης -->
+            <div id="slide-12" class="slide old-paper" data-slide="12">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/conchr/Karamichos-Tower/main/logo%20Farsala.png" alt="Λογότυπο Φαρσάλων" class="w-full h-full object-contain">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-gray-200 pb-2">Σας ευχαριστούμε που παρακολουθήσατε αυτή την παρουσίαση</h2>
+                <p class="text-lg text-gray-800 leading-relaxed text-center">Ελπίζουμε να σας ενέπνευσε να μάθετε περισσότερα για το σημαντικό πολιτιστικό μνημείο των Φαρσάλων και να το επισκεφτείτε προσωπικά.</p>
+                <div class="mt-12 text-center">
+                    <a href="#" class="inline-block px-8 py-4 bg-green-600 text-white font-bold rounded-full shadow-lg hover:bg-green-700 transition transform hover:scale-105 text-xl">
+                        Θέλετε να κάνετε το Quiz Γνώσεων;
+                    </a>
+                </div>
+                <div class="mt-8 text-center text-gray-600">
+                    <p>Για περισσότερες πληροφορίες, επισκεφτείτε τον Πύργο του Καραμίχου στα Φάρσαλα</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Περιοχή Πλοήγησης και Πληροφοριών -->
+        <div class="bg-gray-100 p-6 md:p-8 rounded-b-xl border-t border-gray-200">
+            <div class="flex justify-between items-center mb-4">
+                <!-- Αριστερό κουμπί: Προηγούμενη Σελίδα -->
+                <button id="prev-btn" class="flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition disabled:opacity-50" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Προηγούμενη Σελίδα
+                </button>
+
+                <!-- Δεξιό κουμπί: Επόμενη Σελίδα -->
+                <button id="next-btn" class="flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition">
+                    Επόμενη Σελίδα
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Κουμπί Επιστροφής στην Αρχική Σελίδα (Διαφορετικό Χρώμα) -->
+            <div class="text-center mt-6">
+                <a href="https://conchr.github.io/Farsala-Center-Page/" 
+                   class="inline-block px-6 py-3 bg-red-600 text-white font-bold rounded-full shadow-lg hover:bg-red-700 transition transform hover:scale-105">
+                    Επιστροφή στην Αρχική Σελίδα
+                </a>
+            </div>
+
+            <!-- Αρίθμηση σελίδας και οδηγίες -->
+            <div id="page-indicator" class="text-center text-sm text-gray-500 mt-4">
+                Διαφάνεια 1 από 12
+            </div>
+            <div class="text-center text-xs text-gray-400 mt-2">
+                Χρησιμοποιήστε τα βελάκια ← → στο πληκτρολόγιο για πλοήγηση
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript για τη λειτουργία της παρουσίασης -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const pageIndicator = document.getElementById('page-indicator');
+            const progressFill = document.getElementById('progress-fill');
+            let currentSlideIndex = 0;
+
+            const totalSlides = slides.length;
+
+            /**
+             * Εμφανίζει τη διαφάνεια με τον συγκεκριμένο δείκτη και ενημερώνει τα κουμπιά πλοήγησης.
+             * @param {number} index - Ο δείκτης της διαφάνειας που θα εμφανιστεί.
+             */
+            function showSlide(index) {
+                // Περιορίζει τον δείκτη μέσα στα όρια
+                if (index < 0) {
+                    currentSlideIndex = 0;
+                } else if (index >= totalSlides) {
+                    currentSlideIndex = totalSlides - 1;
+                } else {
+                    currentSlideIndex = index;
+                }
+
+                // Απόκρυψη όλων των διαφανειών
+                slides.forEach((slide) => {
+                    slide.classList.remove('active');
+                });
+
+                // Εμφάνιση της τρέχουσας διαφάνειας
+                slides[currentSlideIndex].classList.add('active');
+
+                // Ενημέρωση κατάστασης κουμπιών
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+
+                // Ενημέρωση ένδειξης σελίδας
+                pageIndicator.textContent = `Διαφάνεια ${currentSlideIndex + 1} από ${totalSlides}`;
+                
+                // Ενημέρωση progress bar
+                const progressPercentage = ((currentSlideIndex + 1) / totalSlides) * 100;
+                progressFill.style.width = `${progressPercentage}%`;
+            }
+
+            /**
+             * Πλοήγηση στην επόμενη διαφάνεια.
+             */
+            function nextSlide() {
+                if (currentSlideIndex < totalSlides - 1) {
+                    showSlide(currentSlideIndex + 1);
+                }
+            }
+
+            /**
+             * Πλοήγηση στην προηγούμενη διαφάνεια.
+             */
+            function prevSlide() {
+                if (currentSlideIndex > 0) {
+                    showSlide(currentSlideIndex - 1);
+                }
+            }
+
+            // 1. Σύνδεση κουμπιών με τις λειτουργίες πλοήγησης
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // 2. Σύνδεση των βελών (πλήκτρα) με τις λειτουργίες πλοήγησης
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
+            });
+
+            // Αρχική φόρτωση της πρώτης διαφάνειας
+            showSlide(currentSlideIndex);
+        });
+    </script>
+</body>
+</html>
